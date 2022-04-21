@@ -1,0 +1,31 @@
+service: otp-service-test
+
+provider:
+  name: aws
+  runtime: java11
+  region: ap-southeast-1
+
+package:
+  artifact: target/function.zip
+
+functions:
+  TestApi:
+    handler: io.quarkus.amazon.lambda.runtime.QuarkusStreamHandler::handleRequest
+    timeout: 900
+    events:
+      - httpApi:
+          path: /hashMD5
+          method: post
+      - httpApi:
+          path: /CheckOTP
+          method: post
+      - httpApi:
+          path: /randomOTP
+          method: get
+#  TestApi:
+#    handler: io.quarkus.amazon.lambda.runtime.QuarkusStreamHandler::handleRequest
+#    timeout: 900
+#    events:
+#      - httpApi:
+#          path: /test
+#          method: get
